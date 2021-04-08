@@ -9,15 +9,13 @@ public class item {
 
 	 try
 	 {
-	 Class.forName("com.mysql.jdbc.Driver");
-	 con= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/paf","root", "");
-	 //For testing
-	 System.out.print("Successfully connected");
+		 Class.forName("com.mysql.jdbc.Driver");
+		 con= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/paf","root", "");
 	 }
 	 catch(Exception e)
 	 {
-	 e.printStackTrace();
-	 return null;
+		 e.printStackTrace();
+		 return null;
 	 }
 
 	 return con;
@@ -40,14 +38,14 @@ public class item {
 					con.close();
 
 					
-					return "True";
+					return "Insert successfully";
 
 		}catch(Exception ee){
-			return "False";
+			return "Error while Inserting the items";
 		}
 	}
 		
-		public String selectItem() {
+	public String selectItem() {
 			String output = ""; 
 			try
 			 { 
@@ -79,13 +77,12 @@ public class item {
 				 output += "<td>" + itemPrice + "</td>"; 
 				 output += "<td>" + itemDesc + "</td>";
 				 // buttons
-				 output += "<td><input name='btnUpdate' " 
-							 + " type='button' value='Update'></td>"
-							 + "<td><form method='post' action='items.jsp'>"
-							 + "<input name='btnRemove' " 
-							 + " type='submit' value='Remove'>"
-							 + "<input name='itemID' type='hidden' " 
-							 + " value='" + itemID + "'>" + "</form></td></tr>"; 
+				 output += "<td>" + "<form method='post' action='item.jsp'>"
+							+ "<input name='btnUpdate' type='submit' value='Update'></td>"
+							+ "<input name='updateMode' type='hidden' value='" + itemID + "'>" + "</form>" + "<td>"
+							+ "<form method='post' action='item.jsp'>"
+							+ "<input name='btnRemove' type='submit' value='Remove'>"
+							+ "<input name='itemID' type='hidden' value='" + itemID + "'>" + "</form></td></tr>";
 				 } 
 					 con.close(); 
 					 // Complete the html table
@@ -98,5 +95,58 @@ public class item {
 				} 
 				return output; 
 	}
+		
+	public String deleteItem(String itemID) {
+		String output = "";
+		try {
+			Connection con = connect();
+			if (con == null) {
+				return "Error while connecting to the database for deleting.";
+			}
+			// create a prepared statement
+			String query = "DELETE FROM items WHERE itemID=?";
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			// binding values
+			preparedStmt.setInt(1, Integer.parseInt(itemID));
 
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			output = "Deleted successfully";
+		} catch (Exception e) {
+			output = "Error while deleting the item.";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+	
+	public String updateItem(int itemID, String code, String name, String price, String desc) {
+		Connection con = connect();
+		String output = "";
+		if (con == null) {
+			return "Error while updateing to the database";
+		}
+
+		// create a prepared statement
+		String query = " update items set itemCode= ? , itemName = ? , itemPrice = ? , itemDesc = ?  where itemID = ? ";
+		PreparedStatement preparedStmt;
+		try {
+			preparedStmt = con.prepareStatement(query);
+
+			preparedStmt.setString(1, code);
+			preparedStmt.setString(2, name);
+			preparedStmt.setDouble(3, Double.parseDouble(price));
+			preparedStmt.setString(4, desc);
+			preparedStmt.setInt(5, itemID);
+
+			preparedStmt.executeUpdate();
+			con.close();
+			output = "updated successfully";
+		} catch (SQLException e) {
+			output = "Error while updateing";
+			System.err.println(e.getMessage());
+		}
+
+		return output;
+	}
 }
