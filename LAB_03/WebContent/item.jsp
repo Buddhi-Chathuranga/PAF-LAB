@@ -3,6 +3,7 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <%@page import="classes.item" %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 <html>
 <head>
@@ -13,14 +14,12 @@
 
 
 
-<form method="post" action="item.jsp">
-	<center>
-	Item Code : <input name="itemCode" type="text"><br><br><br>
-	Item Name : <input name="itemName" type="text"><br><br><br>
-	Item Price : <input name="itemPrice" type="text"><br><br><br>
-	Item Description : <input name="itemDesc" type="text"><br><br><br>
-	<input name="btmSubmit" type="submit" value="Save">
-	</center>
+<form method="post" action="item.jsp" >
+	<div class="form-group">Item Code : <input name="itemCode" type="text" class="form-control" ></div><br><br>
+	<div class="form-group">Item Name : <input name="itemName" type="text" class="form-control"></div><br><br>
+	<div class="form-group">Item Price : <input name="itemPrice" type="text" class="form-control"></div><br><br>
+	<div class="form-group">Item Description : <input name="itemDesc" type="text" class="form-control"></div><br>
+	<center><input name="btmSubmit" type="submit" value="Save" class="btn btn-primary"></center>
 </form>
 <%
 System.out.println("Inner Java");
