@@ -57,10 +57,10 @@ public class item {
 					 	return "Error while connecting to the database for reading."; 
 				 } 
 				 
-			 output = "<table border='1'><tr><th>Item Code</th>" 
-						 +"<th>Item Name</th><th>Item Price</th>"
-						 + "<th>Item Description</th>" 
-						 + "<th>Update</th><th>Remove</th></tr>"; 
+			 output = "<div class='container'><table class='table'><tr><th>Item Code</th>" 
+						 +"<th scope='col'>Item Name</th><th>Item Price</th>"
+						 + "<th scope='col'>Item Description</th>" 
+						 + "<th scope='col'>Update</th><th>Remove</th></tr>"; 
 			 
 			 String query = "select * from items"; 
 			 Statement stmt = con.createStatement(); 
@@ -89,7 +89,7 @@ public class item {
 				 } 
 					 con.close(); 
 					 // Complete the html table
-					 output += "</table>"; 
+					 output += "</table></div>"; 
 				 } 
 				catch (Exception e) 
 				{ 

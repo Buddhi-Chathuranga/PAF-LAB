@@ -12,15 +12,29 @@
 </head>
 <body>
 
-
-
-<form method="post" action="item.jsp" >
-	<div class="form-group">Item Code : <input name="itemCode" type="text" class="form-control" ></div><br><br>
-	<div class="form-group">Item Name : <input name="itemName" type="text" class="form-control"></div><br><br>
-	<div class="form-group">Item Price : <input name="itemPrice" type="text" class="form-control"></div><br><br>
-	<div class="form-group">Item Description : <input name="itemDesc" type="text" class="form-control"></div><br>
-	<center><input name="btmSubmit" type="submit" value="Save" class="btn btn-primary"></center>
-</form>
+<div class="container">
+<form method="post" action="item.jsp">
+    <div class="form-group">
+      <label for="text">Item Code : </label>
+      <input name="itemCode" type="text" class="form-control" placeholder="Enter Item Code" >
+    </div>
+    <div class="form-group">
+      <label for="text">Item Name : </label>
+      <input name="itemName" type="text" class="form-control" placeholder="Enter Item Name" >
+    </div>
+    <div class="form-group">
+      <label for="text">Item Price : </label>
+      <input name="itemPrice" type="number" min="0.00" max="10000.00" step="0.01" class="form-control" placeholder="Enter Item Price" >
+    </div>
+    <div class="form-group">
+      <label for="text">Item Description : </label>
+      <input name="itemDesc" type="text" class="form-control" placeholder="Enter Item Description" >
+    </div>
+    
+    <button name="btmSubmit" type="submit" value="Save" class="btn btn-default">Submit</button>
+  </form>
+  </div>
+  <br><br>
 <%
 System.out.println("Inner Java");
 String msgSelect;
