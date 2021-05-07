@@ -13,6 +13,36 @@
 </head>
 <body>
 
+<%
+//add
+	if(request.getParameter("itemCode") != null){
+		item ob = new item();
+		String stsMsg = ob.insertItem(request.getParameter("itemCode").toString(),request.getParameter("itemName").toString(),request.getParameter("itemPrice").toString(),request.getParameter("itemDesc").toString());
+		session.setAttribute("statusMsg", stsMsg); 
+	}
+//delete
+	if (request.getParameter("itemID") != null){ 
+		 item itemObj = new item(); 
+		 String stsMsg = itemObj.deleteItem(request.getParameter("itemID")); 
+		 session.setAttribute("statusMsg", stsMsg); 
+	 }
+//update 
+	 if (request.getParameter("itemCode") != null && (session.getAttribute("updateMode") != null)) {
+		 System.out.println("update called");
+			item itemObj = new item();
+			String stsMsg = itemObj.updateItem(Integer.parseInt(String.valueOf(session.getAttribute("updateMode"))),request.getParameter("itemCode"), request.getParameter("itemName"), request.getParameter("itemPrice"),request.getParameter("itemDesc"));
+
+		//System.out.println("xxxxx");
+			session.setAttribute("statusMsg", stsMsg);
+		} 
+	 	else if (request.getParameter("itemCode") != null) { //insert new
+			item itemObj = new item();
+			String stsMsg = itemObj.insertItem(request.getParameter("itemCode"), request.getParameter("itemName"),
+			request.getParameter("itemPrice"), request.getParameter("itemDesc"));
+			session.setAttribute("statusMsg", stsMsg);
+	}
+%>
+
 	<div class="container">
 		<form method="post" action="item.jsp">
 			<div class="form-group">
@@ -44,35 +74,7 @@
 	item ob1 = new item();
 	out.print(ob1.selectItem()); 
 %>
-<%
-//add
-	if(request.getParameter("itemCode") != null){
-		item ob = new item();
-		String stsMsg = ob.insertItem(request.getParameter("itemCode").toString(),request.getParameter("itemName").toString(),request.getParameter("itemPrice").toString(),request.getParameter("itemDesc").toString());
-		session.setAttribute("statusMsg", stsMsg); 
-	}
-//delete
-	if (request.getParameter("itemID") != null){ 
-		 item itemObj = new item(); 
-		 String stsMsg = itemObj.deleteItem(request.getParameter("itemID")); 
-		 session.setAttribute("statusMsg", stsMsg); 
-	 }
-//update 
-	 if (request.getParameter("itemCode") != null && (session.getAttribute("updateMode") != null)) {
-		 System.out.println("update called");
-			item itemObj = new item();
-			String stsMsg = itemObj.updateItem(Integer.parseInt(String.valueOf(session.getAttribute("updateMode"))),request.getParameter("itemCode"), request.getParameter("itemName"), request.getParameter("itemPrice"),request.getParameter("itemDesc"));
 
-		//System.out.println("xxxxx");
-			session.setAttribute("statusMsg", stsMsg);
-		} 
-	 	else if (request.getParameter("itemCode") != null) { //insert new
-			item itemObj = new item();
-			String stsMsg = itemObj.insertItem(request.getParameter("itemCode"), request.getParameter("itemName"),
-			request.getParameter("itemPrice"), request.getParameter("itemDesc"));
-			session.setAttribute("statusMsg", stsMsg);
-	}
-%>
 	<center><div class="container">
 	<div class="alert alert-success">
 		<% out.print(session.getAttribute("statusMsg"));%>
